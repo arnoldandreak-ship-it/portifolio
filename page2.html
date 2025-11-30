@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Career Goals Page">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <title>Career Goals - Arnold's Portfolio</title>
+</head>
+<body>
+    <header>
+        <h1>Arnold's Portfolio</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Academic Results</a>
+                <ul class="dropdown-menu">
+                    <li><a href="year1.html">Year 1 Results</a></li>
+                    <li><a href="year2.html">Year 2 Results</a></li>
+                    <li><a href="year3.html">Year 3 Results</a></li>
+                    <li><a href="year4.html">Year 4 Results</a></li>
+                </ul>
+            </li>
+            <li><a href="page1.html">Hobbies</a></li>
+            <li><a href="page2.html">Career Goals</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Career Goals</h2>
+
+        <div id="careerSlideshow" data-interval="3000">
+            <img class="career-slide" src="images/istockphoto-1439425791-1024x1024.jpg" alt="Goal 1">
+            <img class="career-slide" src="C:\Users\User\Documents\my assignment\images\download 3.jpg" alt="Goal 2">
+            <img class="career-slide" src="C:\Users\User\Documents\my assignment\images\img 4.jpg" alt="Goal 3">
+            <img class="career-slide" src="C:\Users\User\Documents\my assignment\images\img 7.jpg" alt="Goal 4">
+            <img class="career-slide" src="C:\Users\User\Documents\my assignment\images\img 11.jpg" alt="Goal 5">
+            <div class="controls">
+                <button id="careerPrev" type="button">Previous</button>
+                <button id="careerNext" type="button">Next</button>
+            </div>
+            <div id="careerDots"></div>
+        </div>
+
+        <div id="careerVideoSection">
+            <h3>Career Videos</h3>
+            <div id="careerVideos">
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 4.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 5.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 6.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <h3>Brief History</h3>
+        <div id="careerHistory" class="classy-textbox" contenteditable="true" role="textbox" aria-label="Career history">i want to become a great software engineer and am slowly buidling my path towards that cause what made to aspire to be great in that video was when i finished my first degree i realized i had more to offer in this world so i pursed a second degree in order to further my knowledge and prepaidness in that area .its a lot to tackle but with God anything is possible  and i also am still pursuing a career in my basketball life i  have played professional basketball in china and now i want to start coaching and help other children to grow further than me and reach limits with no boundaries</div>
+        <div style="margin-top:0.5rem;"><button id="saveCareerHistory" type="button">Save History</button></div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Arnold's Portfolio</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

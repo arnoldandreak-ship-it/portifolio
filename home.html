@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Home Page of Personal Portfolio">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Homepage slideshow frame: responsive, images fully visible (no cropping) */
+        :root { --home-slideshow-max-width: 900px; --home-slideshow-aspect: 16 / 9; }
+        #slideshow {
+            max-width: var(--home-slideshow-max-width);
+            width: 100%;
+            margin: 1rem auto;
+            aspect-ratio: var(--home-slideshow-aspect);
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            display:flex; align-items:center; justify-content:center;
+            position: relative;
+        }
+        #slideshow img {
+            display: none;
+            width: 100%; height: 100%;
+            object-fit: contain; /* ensure entire image fits */
+            border-radius: 6px;
+        }
+        #slideshow img.active { display: block; }
+        #slideshow > div.buttons { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); }
+        #prev, #next { margin: 0 6px; padding: 0.4rem 0.6rem; cursor: pointer; }
+        #dots { position: absolute; top: 10px; right: 10px; }
+        #dots .dot { display:inline-block; width:10px; height:10px; border-radius:50%; background:#bbb; margin:0 4px; cursor:pointer }
+        #dots .dot.active { background:#333 }
+    </style>
+    <title>Home - Arnold's Portfolio</title>
+</head>
+<body>
+    <header>
+        <h1>Arnold's Portfolio</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Academic Results</a>
+                <ul class="dropdown-menu">
+                    <li><a href="year1.html">Year 1 Results</a></li>
+                    <li><a href="year2.html">Year 2 Results</a></li>
+                    <li><a href="year3.html">Year 3 Results</a></li>
+                    <li><a href="year4.html">Year 4 Results</a></li>
+                </ul>
+            </li>
+            <li><a href="page1.html">Hobbies</a></li>
+            <li><a href="page2.html">Career Goals</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div id="slideshow">
+            <img class="slide" src="images/download-1.jpg" alt="Slide 1">
+            <img class="slide" src="images/img-7.jpg" alt="Slide 2">
+            <img class="slide" src="images/img-10.jpg" alt="Slide 3">
+            <img class="slide" src="images/istockphoto-1439425791-1024x1024.jpg" alt="Slide 4">
+            <img class="slide" src="images/download-2.jpg" alt="Slide 5">
+            <div class="buttons">
+                <button id="prev" type="button">Previous</button>
+                <button id="next" type="button">Next</button>
+            </div>
+            <div id="dots" aria-hidden="false"></div>
+        </div>
+            <script>
+            (function(){
+                // Homepage slideshow: slower auto-advance and images fully fit the frame
+                const slides = Array.from(document.querySelectorAll('#slideshow .slide'));
+                const prevBtn = document.getElementById('prev');
+                const nextBtn = document.getElementById('next');
+                const dotsContainer = document.getElementById('dots');
+                let index = 0;
+                const intervalMs = 1000; // 1 second auto-advance (slower)
+                let timer = null;
+
+                function createDots(){
+                    slides.forEach((_, i)=>{
+                        const d = document.createElement('span');
+                        d.className = 'dot' + (i===0? ' active':'');
+                        d.addEventListener('click', ()=>{ goTo(i); resetTimer(); });
+                        dotsContainer.appendChild(d);
+                    });
+                }
+
+                function show(i){
+                    slides.forEach((s, idx)=> s.classList.toggle('active', idx===i));
+                    const dots = dotsContainer.querySelectorAll('.dot');
+                    dots.forEach((d, idx)=> d.classList.toggle('active', idx===i));
+                }
+
+                function nextSlide(){ if(slides.length) { index = (index+1) % slides.length; show(index); } }
+                function prevSlide(){ if(slides.length) { index = (index-1 + slides.length) % slides.length; show(index); } }
+                function goTo(i){ index = i; show(index); }
+                function resetTimer(){ if(timer) clearInterval(timer); timer = setInterval(nextSlide, intervalMs); }
+
+                if(slides.length>0){
+                    createDots();
+                    show(0);
+                    prevBtn.addEventListener('click', ()=>{ prevSlide(); resetTimer(); });
+                    nextBtn.addEventListener('click', ()=>{ nextSlide(); resetTimer(); });
+                    timer = setInterval(nextSlide, intervalMs);
+                }
+            })();
+            </script>
+        <section>
+            <img src= "C:\Users\User\Documents\my assignment\images\img 3.jpg"alt="Profile Picture" class="profile-pic">
+            <h2>Welcome, Arnold Anesu Kaitano</h2> <!-- Updated name -->
+            <p id="datetime"></p>
+            <p>Short biography: I am a passionate student in Informantion Systems and technology, with interests in web development and AI.I enjoy a lot of things namely basketball, traveling, soccer and anything thats very adventourus   </p>
+        </section>
+        <section>
+            <h3>Website Instructions</h3>
+            <video controls>
+                <source src="video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Arnold's Portfolio</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

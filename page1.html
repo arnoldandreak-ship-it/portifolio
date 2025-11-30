@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hobbies Page">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Slideshow sizing and layout overrides for this page
+           - Uses a consistent frame (aspect-ratio) so each image fully fits (no cropping).
+           - Change --slideshow-max-width or --slideshow-aspect to tune size/shape. */
+        :root { --slideshow-max-width: 900px; --slideshow-aspect: 16 / 9; }
+        #hobbiesSlideshow {
+            position: relative;
+            max-width: var(--slideshow-max-width);
+            width: 100%;
+            margin: 1rem auto;
+            aspect-ratio: var(--slideshow-aspect);
+            background: #000; /* shows letterbox color when image aspect differs */
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #hobbiesSlideshow .slide {
+            display: none; /* hide all by default; JS will show the active one */
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* ensure entire image is visible, no cropping */
+            border-radius: 6px;
+            background: transparent;
+        }
+        #hobbiesSlideshow .active { display: block; }
+        #hobbiesPrev, #hobbiesNext {
+            margin: 0.5rem 0.25rem; padding: 0.4rem 0.6rem; cursor: pointer;
+        }
+        #hobbiesDots { margin-top: 0.5rem; }
+        #hobbiesDots .dot { display: inline-block; width: 10px; height: 10px; border-radius:50%; background:#bbb; margin: 0 4px; cursor:pointer; }
+        #hobbiesDots .dot.active { background:#333; }
+    </style>
+    <title>Hobbies - Arnold's Portfolio</title>
+</head>
+<body>
+    <header>
+        <h1>Arnold's Portfolio</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Academic Results</a>
+                <ul class="dropdown-menu">
+                    <li><a href="year1.html">Year 1 Results</a></li>
+                    <li><a href="year2.html">Year 2 Results</a></li>
+                    <li><a href="year3.html">Year 3 Results</a></li>
+                    <li><a href="year4.html">Year 4 Results</a></li>
+                </ul>
+            </li>
+            <li><a href="page1.html">Hobbies</a></li>
+            <li><a href="page2.html">Career Goals</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>My Hobbies</h2>
+        <!-- Hobbies Slideshow: Replace the src paths below with your actual hobby images (e.g., images/hobby1.jpg, images/hobby2.jpg, etc.) -->
+            <div id="hobbiesSlideshow">
+                <img class="slide" src="C:\Users\User\Documents\my assignment\images\img 4.jpg" alt="Hobby Slide 1"> <!-- update path if needed -->
+                <img class="slide" src= "C:\Users\User\Documents\my assignment\images\img 6.jpg"alt="Hobby Slide 2">
+                <img class="slide" src="C:\Users\User\Documents\my assignment\images\img 7.jpg" alt="Hobby Slide 3">
+                <img class="slide" src="C:\Users\User\Documents\my assignment\images\img 10.jpg" alt="Hobby Slide 4">
+                <img class="slide" src="C:\Users\User\Documents\my assignment\images\img 11.jpg" alt="Hobby Slide 5">
+                <div>
+                    <button id="hobbiesPrev" type="button">Previous</button>
+                    <button id="hobbiesNext" type="button">Next</button>
+                </div>
+                <div id="hobbiesDots" aria-hidden="false"></div>
+            </div>
+
+            <script>
+            (function(){
+                // Slideshow logic: auto-advance every 0.2s (200ms)
+                const slides = Array.from(document.querySelectorAll('#hobbiesSlideshow .slide'));
+                const prevBtn = document.getElementById('hobbiesPrev');
+                const nextBtn = document.getElementById('hobbiesNext');
+                const dotsContainer = document.getElementById('hobbiesDots');
+                let index = 0;
+                // Slideshow interval in milliseconds. Changed to 500ms (0.5s) to be a little slower.
+                // Change this value to tune speed (e.g., 1000 for 1 second).
+                const intervalMs = 900; // 0.5 seconds
+                let timer = null;
+
+                function createDots(){
+                    slides.forEach((_, i) => {
+                        const d = document.createElement('span');
+                        d.className = 'dot' + (i===0? ' active':'');
+                        d.addEventListener('click', ()=>{ goTo(i); resetTimer(); });
+                        dotsContainer.appendChild(d);
+                    });
+                }
+
+                function show(i){
+                    slides.forEach((s, idx)=> {
+                        s.classList.toggle('active', idx===i);
+                        s.setAttribute('aria-hidden', idx===i ? 'false' : 'true');
+                    });
+                    const dots = dotsContainer.querySelectorAll('.dot');
+                    dots.forEach((d, idx)=> d.classList.toggle('active', idx===i));
+                }
+
+                function nextSlide(){ if(slides.length) { index = (index+1) % slides.length; show(index); } }
+                function prevSlide(){ if(slides.length) { index = (index-1 + slides.length) % slides.length; show(index); } }
+                function goTo(i){ index = i; show(index); }
+
+                function resetTimer(){ if(timer) clearInterval(timer); timer = setInterval(nextSlide, intervalMs); }
+
+                if(slides.length>0){
+                    createDots();
+                    show(0);
+                    prevBtn.addEventListener('click', ()=>{ prevSlide(); resetTimer(); });
+                    nextBtn.addEventListener('click', ()=>{ nextSlide(); resetTimer(); });
+                    timer = setInterval(nextSlide, intervalMs);
+                }
+            })();
+            </script>
+
+        <!-- Hobbies: upload videos (up to 5) and career history textbox -->
+        <section id="hobbiesUploadSection">
+            <h3>Videos</h3>
+
+            <div id="hobbiesVideos" aria-live="polite">
+                <video controls width="320">
+                    <source src= "C:\Users\User\Documents\my assignment\videos\vid 1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 4.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 5.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video controls width="320">
+                    <source src="C:\Users\User\Documents\my assignment\videos\vid 6.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <h3 style="margin-top:1rem;">Basketball Career History</h3>
+            <textarea id="hobbiesHistory" class="classy-textbox">I started playing basketball in grade 3 after watching my role model, Kobe Bryant. I was so jealous of my brothers and aspired to be better than them. By grade 7 I was already a star in the making. I continued playing throughout high school, where I had the honor of representing Zimbabwe on the national team. After finishing high school I moved to China to further my career and played for a Division 3 club called Anejo, where I was named Rookie of the Year. After 20 years of playing basketball, I am grateful for where it took me and the people I met — including celebrities such as Stephen Curry, Stephon Marbury, Lamar Odom, and Yao Ming. Now I am aspiring to be a coach; recently I led my team to win the nationals in the girls' category and silver in the boys' category. There is still a lot to be done, but I love basketball and I will forever be married to the game.</textarea>
+            <div style="margin-top:0.5rem;"><button id="saveHobbiesHistory" type="button">Save History</button> <button id="clearHobbiesHistory" type="button">Clear</button></div>
+        </section>
+
+        <!-- single combined video element removed; videos are displayed above as individual players -->
+
+
+        <audio controls>
+            <source src="audio.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        
+        <script src="script.js"></script>
